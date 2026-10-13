@@ -76,4 +76,6 @@ namespace JuegodeCartasForms
 
         public abstract double CalcularDaño();
     }
+
+
 }
