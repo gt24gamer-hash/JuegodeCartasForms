@@ -25,7 +25,7 @@ namespace JuegodeCartasForms
             set
             {
                 if (value < 1) { atk = 1; }
-                else if (value > 20) { atk = 20; }
+                else if (value > 99) { atk = 99; }
                 else { atk = value; }
             }
         }
@@ -47,7 +47,7 @@ namespace JuegodeCartasForms
             set
             {
                 if (value < 0) { def = 0; }
-                else if (value > 20) { def = 20; }
+                else if (value > 99) { def = 99; }
                 else { def = value; }
             }
         }
@@ -88,6 +88,7 @@ namespace JuegodeCartasForms
         public virtual void Defender()
         {
             DEF += 1;
+            ENG += 1;
         }
 
         public abstract void Atacar(Personaje enemigo);
