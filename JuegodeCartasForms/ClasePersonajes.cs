@@ -6,77 +6,94 @@ namespace JuegodeCartasForms
 {
     internal abstract class Personaje
     {
-        public string Nombre { get ; set; }
-        private double vida = 100;
-        public double Vida
+        public string Nombre { get; set; }
+        private double hp;
+        public double HP
         {
-            get { return vida; }
+            get { return hp; }
             protected set
             {
-                if (value < 0) { vida = 0; }
-                else { vida = value; }
+                if (value < 0) { hp = 0; }
+                else if (value > 99) { hp = 99; }
+                else { hp = value; }
             }
         }
-
-
-        private double fuerza;
-        public double Fuerza
+        private double atk;
+        public double ATK
         {
-            get { return fuerza; }
-            set{
-                if (value < 1) { fuerza = 1; }
-                else if (value > 20) { fuerza = 20; }
-                else { fuerza = value; }
-               }
-        }
-
-        private double magia;
-        public double Magia
-        {
-            get { return magia; }
+            get { return atk; }
             set
             {
-                if (value < 1) { magia = 1; }
-                else if (value > 20) { magia = 20; }
-                else { magia = value; }
+                if (value < 1) { atk = 1; }
+                else if (value > 20) { atk = 20; }
+                else { atk = value; }
+            }
+        }
+        private int eng;
+        public int ENG
+        {
+            get { return eng; }
+            set
+            {
+                if (value < 0) { eng = 0; }
+                else if (value > 10) { eng = 10; }
+                else { eng = value; }
+            }
+        }
+        private double def;
+        public double DEF
+        {
+            get { return def; }
+            set
+            {
+                if (value < 0) { def = 0; }
+                else if (value > 20) { def = 20; }
+                else { def = value; }
             }
         }
 
-        private double resistencia;
-        public double Resistencia 
-        { 
-            get { return resistencia;  }
-            set {
-                if (value < 1) { resistencia = 1; }
-                else if (value > 20) { resistencia = 20; }
-                else { resistencia = value; }
-                }
-        }
-
-       /* public string objeto1 { get; set; }
-        public string objeto2 { get; set; }*/
-
-
-        public Personaje(string nombre, double fuerza, double magia, double resistencia/*, string objeto1, string objeto2*/)
+        public Personaje(string nombre, double hp, double atk, int eng, double def)
         {
             Nombre = nombre;
-            Fuerza = fuerza;
-            Magia = magia;
-            Resistencia = resistencia;
-           /* this.objeto1 = objeto1;
-            this.objeto2 = objeto2;*/
+            HP = hp;
+            ATK = atk;
+            ENG = eng;
+            DEF = def;
 
         }
 
-        public virtual void recibirDaño(double daño)
-        { 
-            Vida = Vida-daño;
-            //el personaje pierde vida
+        public virtual void RecibirDaño(double daño)
+        {
+
+            double dañoRestante;
+            double defensaInicial;
+
+            if (daño <= DEF)
+            {
+                DEF -= daño;
+            }
+            else
+            {
+                dañoRestante = daño;
+                defensaInicial = DEF;
+
+                DEF -= daño;
+                dañoRestante -= defensaInicial;
+
+                HP -= dañoRestante;
+
+            }
         }
 
-        public abstract double CalcularDaño();
+        public virtual void Defender()
+        {
+            DEF += 1;
+        }
+
+        public abstract void Atacar(Personaje enemigo);
+
+        public abstract void HabilidadEsp();
+
+
     }
-
-
-
 }
